@@ -1,0 +1,20 @@
+# Spotify
+spotipy==2.24.0
+
+# YouTube
+google-api-python-client==2.154.0
+google-auth-httplib2==0.2.0
+google-auth-oauthlib==1.2.1
+
+# OpenAI (DALL·E)
+openai==1.59.4
+
+# HTTP / images
+requests==2.32.3
+Pillow==11.1.0
+
+# yt-dlp (audio download) — installed as a package so it's pinnable
+yt-dlp==2025.1.26
+
+# Environment variables
+python-dotenv==1.0.1
