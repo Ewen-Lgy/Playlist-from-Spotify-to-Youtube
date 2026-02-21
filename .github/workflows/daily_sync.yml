@@ -30,6 +30,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --fix-missing ffmpeg
 
+      - name: Write YouTube cookies
+        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > /tmp/youtube_cookies.txt
+
       - name: Run pipeline
         env:
           # Spotify
@@ -47,6 +50,7 @@ jobs:
           # Unsplash
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
           # Pipeline settings
+          YOUTUBE_COOKIES_FILE: /tmp/youtube_cookies.txt
           YOUTUBE_PRIVACY_STATUS: unlisted
           WORK_DIR: /tmp/pipeline_work
           OUTPUT_DIR: /tmp/pipeline_output

@@ -9,6 +9,7 @@ that could not be downloaded.
 """
 
 import logging
+import os
 import re
 import shutil
 from dataclasses import dataclass
@@ -74,6 +75,10 @@ def _download_single(track: Track, work_dir: Path) -> Path:
         "quiet": True,
         "no_warnings": True,
     }
+
+    cookies_file = os.environ.get("YOUTUBE_COOKIES_FILE")
+    if cookies_file:
+        ydl_opts["cookiefile"] = cookies_file
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"ytsearch1:{query}"])
