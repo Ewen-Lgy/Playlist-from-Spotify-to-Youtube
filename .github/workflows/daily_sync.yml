@@ -23,7 +23,7 @@ jobs:
           cache: "pip"
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt && pip install -U yt-dlp
+        run: pip install -r requirements.txt
 
       - name: Install FFmpeg
         run: |

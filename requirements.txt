@@ -14,7 +14,7 @@ requests==2.32.3
 Pillow==11.1.0
 
 # yt-dlp (audio download) — installed as a package so it's pinnable
-yt-dlp
+yt-dlp==2026.02.04
 
 # Environment variables
 python-dotenv==1.0.1
