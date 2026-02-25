@@ -31,7 +31,9 @@ jobs:
           sudo apt-get install -y --fix-missing ffmpeg
 
       - name: Write YouTube cookies
-        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > /tmp/youtube_cookies.txt
+        run: |
+          printf '%s' "${{ secrets.YOUTUBE_COOKIES }}" > /tmp/youtube_cookies.txt
+          sed -i 's/\r//' /tmp/youtube_cookies.txt
 
       - name: Run pipeline
         env:
