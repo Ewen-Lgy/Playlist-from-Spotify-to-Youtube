@@ -74,6 +74,7 @@ def _download_single(track: Track, work_dir: Path) -> Path:
         "noplaylist": True,
         "quiet": True,
         "no_warnings": True,
+        "extractor_args": {"youtube": {"player_client": ["web", "android", "tv_embedded"]}},
     }
 
     cookies_file = os.environ.get("YOUTUBE_COOKIES_FILE")
