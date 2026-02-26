@@ -1,0 +1,20 @@
+name: Download video
+
+on: [workflow_dispatch]
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install yt-dlp
+        run: |
+          sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+          sudo chmod a+rx /usr/local/bin/yt-dlp
+
+      - name: Write cookies file
+        run: |
+          echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 --decode > /tmp/cookies.txt
+
+      - name: Run yt-dlp
+        run: |
+          yt-dlp --cookies /tmp/cookies.txt "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1"

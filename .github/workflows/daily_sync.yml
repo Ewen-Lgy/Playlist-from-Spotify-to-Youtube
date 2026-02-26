@@ -32,8 +32,9 @@ jobs:
 
       - name: Write YouTube cookies
         run: |
-          printf '%s' "${{ secrets.YOUTUBE_COOKIES }}" > /tmp/youtube_cookies.txt
-          sed -i 's/\r//' /tmp/youtube_cookies.txt
+          echo "${{ secrets.YOUTUBE_COOKIES_B64 }}" | base64 -d > /tmp/youtube_cookies.txt
+          # Vérif
+          head -1 /tmp/youtube_cookies.txt  # doit afficher "# Netscape HTTP Cookie File"
 
       - name: Run pipeline
         env:
