@@ -46,8 +46,8 @@ def assemble_video(
         print(f.name)
         concat_file = Path(f.name)
         for p in audio_paths:
-            # FFmpeg concat demuxer requires absolute, escaped paths
-            escaped = str(Path(p).resolve()).replace("\\", "/").replace("'", "\\'")
+            # FFmpeg concat demuxer requires absolute paths in single quotes
+            escaped = str(Path(p).resolve()).replace("\\", "/")
             f.write(f"file '{escaped}'\n")
 
     try:

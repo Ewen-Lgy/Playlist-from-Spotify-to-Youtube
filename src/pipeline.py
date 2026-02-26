@@ -51,7 +51,7 @@ def _process_playlist(playlist: Playlist, work_base: Path, output_dir: Path) -> 
 
     try:
         # Step 1 — thumbnail
-        thumbnail_path = generate_thumbnail(playlist.name, work_dir)
+        thumbnail_path = generate_thumbnail(playlist.name, work_dir, playlist.cover_url)
 
         # Step 2 — audio download
         downloaded = download_tracks(playlist.tracks, work_dir)

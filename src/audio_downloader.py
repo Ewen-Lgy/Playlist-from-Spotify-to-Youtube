@@ -74,7 +74,7 @@ def _download_single(track: Track, work_dir: Path) -> Path:
         "noplaylist": True,
         "quiet": True,
         "no_warnings": True,
-        "extractor_args": {"youtube": {"player_client": ["web", "android", "tv_embedded"]}},
+        "extractor_args": {"youtube": {"player_client": ["web", "android"]}},
     }
 
     cookies_file = os.environ.get("YOUTUBE_COOKIES_FILE")
@@ -92,4 +92,4 @@ def _download_single(track: Track, work_dir: Path) -> Path:
 
 def _safe_filename(name: str) -> str:
     """Strip characters that are unsafe in file names."""
-    return re.sub(r'[\\/*?:"<>|]', "_", name)[:180]
+    return re.sub(r'[\\/*?:"<>|\'`]', "_", name)[:180]

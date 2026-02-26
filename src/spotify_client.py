@@ -41,6 +41,7 @@ class Playlist:
     id: str
     name: str
     tracks: list[Track]
+    cover_url: str = ""
 
 
 def _build_spotify_client() -> spotipy.Spotify:
@@ -61,7 +62,7 @@ def _build_spotify_client() -> spotipy.Spotify:
     )
     # Inject the stored refresh token so no browser prompt is needed.
     token_info = auth_manager.refresh_access_token(refresh_token)
-    return spotipy.Spotify(auth=token_info["access_token"])
+    return spotipy.Spotify(auth=token_info["access_token"], requests_timeout=10, retries=0)
 
 
 def get_tagged_playlists() -> list[Playlist]:
@@ -77,10 +78,15 @@ def get_tagged_playlists() -> list[Playlist]:
     logger.info("Scanning Spotify playlists for tag '%s'…", YOUTUBE_TAG)
 
     while True:
+        logger.info("  Fetching playlists at offset %d…", offset)
+        user = sp.current_user()
+        logger.info("  Current user: %s", user['display_name'])
         response = sp.current_user_playlists(limit=limit, offset=offset)
         items = response.get("items", [])
         if not items:
             break
+
+        logger.info("  Scanning playlists %d–%d…", offset + 1, offset + len(items))
 
         for item in items:
             name: str = item["name"]
@@ -88,7 +94,9 @@ def get_tagged_playlists() -> list[Playlist]:
                 playlist_id: str = item["id"]
                 logger.info("  Found tagged playlist: %s (id=%s)", name, playlist_id)
                 tracks = _fetch_tracks(sp, playlist_id)
-                tagged.append(Playlist(id=playlist_id, name=name, tracks=tracks))
+                images = item.get("images", [])
+                cover_url = images[0]["url"] if images else ""
+                tagged.append(Playlist(id=playlist_id, name=name, tracks=tracks, cover_url=cover_url))
 
         if response["next"] is None:
             break
