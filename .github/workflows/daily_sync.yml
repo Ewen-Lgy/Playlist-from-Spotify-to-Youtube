@@ -34,6 +34,9 @@ jobs:
         run: |
           echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 --decode > /tmp/youtube_cookies.txt
 
+      - name: Debug yt-dlp formats
+        run: yt-dlp --list-formats --cookies /tmp/youtube_cookies.txt "https://www.youtube.com/watch?v=CLGxx0HFKQ8"
+
       - name: Run pipeline
         env:
           # Spotify
