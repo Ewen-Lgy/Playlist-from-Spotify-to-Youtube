@@ -69,12 +69,19 @@ def _download_single(track: Track, work_dir: Path) -> Path:
                 "preferredquality": "192",
             }
         ],
-        # Search YouTube Music
-        "default_search": "https://music.youtube.com/search?q=",
+        "default_search": "ytmsearch1",  # YouTube Music natif
         "noplaylist": True,
         "quiet": True,
         "no_warnings": True,
-        "extractor_args": {"youtube": {"player_client": ["web", "android"]}},
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["web", "android"],
+                "skip": ["dash", "hls"],  # évite certaines erreurs de format
+            }
+        },
+        "retries": 3,
+        "fragment_retries": 3,
+        "ignoreerrors": True,
     }
 
     cookies_file = os.environ.get("YOUTUBE_COOKIES_FILE")
